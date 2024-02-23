@@ -27,17 +27,22 @@ function init() {
     renderBoard();
 }
 
-function renderBoard() {
-    const letters = document.querySelectorAll('button');
+function render() {
+    renderBoard();
+    renderMessage();
+    renderControls();
+}
 
+function renderBoard() {
+    const letters = document.querySelectorAll('button.key');
+//borrowed this for loop from youtube tutorial
     for (let i = 0; i < letters.length; i++) {
         letters[i].onclick = ({target}) => {
-            const key = target.textContent;
-            
-            addLetter(key);
+                const key = target.textContent;
+                addLetter(key);
+            }
         }
     }
-}
 
 function getCurrentWordArr() {
     const numberOfGuessedWords = guessedWords.length
@@ -56,3 +61,7 @@ function addLetter(letter) {
         nextSpaceEl.textContent = letter;
     }
 }
+
+// renderControls () {
+//     playAgainBtn.style.visibility = winner ? 'visible' : 'hidden';
+// }
