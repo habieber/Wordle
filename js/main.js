@@ -8,18 +8,22 @@ let board = [];
 let secretWord = WORDS_LIST[0];
 
 let winner;
-let lose;
+let loser;
 
-let guessedWords = [[]];
+//an array of arrays that contain the guessed letters from each line
+// let guessedWords = [[]];
 let nextSpace = 1;
+let turn;
+
+
 
 /*----- cached elements  -----*/
-// const deleteBtn = document.getElementById('delete-key')
-// const enterBtn = document.getElementById('enter-key')
-// ^^ cached these, but then realized I didn't need to specifically access them
+const messegeEl = document.querySelector('h2');
+const playAgainBtn = document.getElementById('play-again-btn');
 
 /*----- event listeners -----*/
 const letters = document.querySelectorAll('button.key');
+playAgainBtn.addEventListener('click', init);
 
 /*----- functions -----*/
 
@@ -27,26 +31,25 @@ init();
 
 
 function init() {
-    board = document.querySelectorAll('board > div')
+    board = document.querySelectorAll('#board > div')
+    console.log(board);
+    winner = 0;
+    loser = 0;
+    guessedWords = [[]];
+    turn = 1;
+    //first word is at index 0 here.
     render();
 }
 
 function render() {
     renderKeyboard();
-    // renderMessage();
-    // renderKeyboard();
+    renderMessage();
 }
-
-function renderBoard() {
-    // board.forEach() {
-
-    // }
-} 
 
 // makes the clicking of keys populate letters to the board
 function renderKeyboard() {
 
-//borrowed this for loop from youtube tutorial
+//learned this logic in a youtube tutorial
     for (let i = 0; i < letters.length; i++) {
         letters[i].onclick = ({target}) => {
                 const key = target.textContent;
@@ -54,52 +57,124 @@ function renderKeyboard() {
 // diversion if enter or delete are clicked
                 if(key === 'ENTER') {
                     handleSubmitGuess();
+                    turn += 1;
                     return;
                 } else if(key === 'DEL') {
                     handleDelete();
                     return;
                 }
 
-                addLetter(key);
+                handleAddLetter(key);
             }
         }
     }
 
 function handleSubmitGuess() {
-    console.log('submit guess function!')
-    const currentWordArr = getCurrentWordArr().join('');
-    if(currentWordArr.length !== 5){
+    const currentWord = getCurrentWordArr().join('');
+    if(currentWord.length !== 5){
         return;
-    } else if(currentWordArr === secretWord) {
+    } else if(currentWord === secretWord) {
         console.log('you win!');
+        winner = 1;
+    
+    }
+    
+   
+    highlightLetters();
+
+    if(guessedWords.length === 6) {
+        loser = 1;
+        console.log('you lose');
     }
 
     guessedWords.push([]);
+    render();
 }
+
+function highlightLetters() {
+    let row = document.querySelectorAll('.row' + turn);
+    console.log(row);
+    const currentWord = getCurrentWordArr();
+    console.log(`current word: ${currentWord}`);
+    const secretWordArr = secretWord.split('');
+    console.log(`secret word: ${secretWordArr}`);
+
+
+    currentWord.forEach((letter, i) => {
+        const secretLetter = secretWordArr[i];
+        if (currentWord[i] === secretWordArr[i]) {
+            //console.log('match')
+            //console.log(i);
+            row[i].style.backgroundColor = 'green';
+        }
+    })
+}
+
+// function getTileColor(letter, index) {
+//     const currentWord = getCurrentWordArr();
+//     const isLetter = currentWord.includes(letter)
+
+//     if (!isLetter) {
+//         return 'grey'
+//     } 
+
+//     const letterSpot = currentWord.charAt(index)
+//     const isLetterInSpot = (letter === letterSpot)
+
+//     if (isLetterInSpot) {
+//         return 'green'
+//     }
+
+//     return 'orange'
+// }
+
 
 function handleDelete() {
-    console.log('delete function!')
-}
-
-function getCurrentWordArr() {
-    const numberOfGuessedWords = guessedWords.length
-    return guessedWords[numberOfGuessedWords - 1]
     
+    let currentWordArr = getCurrentWordArr();
+    const deletedLetter = currentWordArr.pop();
+    console.log(currentWordArr)
+
+    currentWordArr = guessedWords[guessedWords.length - 1]
+    const lastLetterEl = document.getElementById((nextSpace - 1))
+console.log(guessedWords[guessedWords.length - 1])
+console.log(guessedWords)
+    lastLetterEl.textContent = '';
+    nextSpace = nextSpace - 1;
+
+    console.log(currentWordArr)
 }
 
-function addLetter(letter) {
+function handleAddLetter(letter) {
     const currentWordArr = getCurrentWordArr()
 
     if (currentWordArr && currentWordArr.length < 5) {
         currentWordArr.push(letter)
 
+        //access by row instead
         const nextSpaceEl = document.getElementById(nextSpace)
         nextSpace = nextSpace + 1
 
         nextSpaceEl.textContent = letter;
     }
+
+
 }
 
-// renderControls () {
-//     playAgainBtn.style.visibility = winner ? 'visible' : 'hidden';
-// }
+function getCurrentWordArr() {
+    const numberOfGuessedWords = guessedWords.length
+    return guessedWords[numberOfGuessedWords - 1]   
+}
+
+function renderMessage() {
+    if(winner === 1) {
+        messegeEl.style.visibility = 'visible';
+        messegeEl.innerText = `You got it!`;
+        playAgainBtn.style.visibility = 'visible';
+    } else if(loser === 1) {
+        messegeEl.style.visibility = 'visible';
+        messegeEl.innerText = `Nice try! The word was ${secretWord}`;
+        playAgainBtn.style.visibility = 'visible';
+    }
+
+}

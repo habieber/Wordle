@@ -27,8 +27,16 @@ header {
 .title {
     color: white;
     font-size: 9vmin;
-    margin: 5vmin 5vmin;
     text-align: center;
+    margin: 5vmin 5vmin;
+}
+
+.message {
+    color: rgb(221, 91, 91);
+    font-size: 3vmin;
+    margin: 2vmin 5vmin;
+    text-align: center;
+    visibility: hidden;
 }
 
 #board {
@@ -36,7 +44,7 @@ header {
     grid-template-columns: repeat(5, 7vmin);
     grid-template-rows: repeat(6, 7vmin);
     gap: 1vmin;
-    margin-top: 0;
+    margin-top: 5vmin;
     margin-bottom: 5vmin;
     justify-content: center;
 }
@@ -62,7 +70,7 @@ header {
     display: flex;
 }
 
-.row2 {
+.key-row2 {
     margin: 2.5px 0;
 }
  
@@ -80,4 +88,19 @@ button, #enter-key, #delete-key {
 button:hover {
     cursor: pointer;
     background-color: rgb(194, 173, 203);
+}
+
+#play-again-btn, footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    background-color: rgb(221, 91, 91);
+    border-radius: 15%;
+    font-size: 20px;
+    font-weight: 100;
+    margin: 0 0.5vmin;
+    padding: 0.5vmin;
+    border: solid 2px grey;
+    visibility: hidden;
 }
