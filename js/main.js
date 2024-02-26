@@ -87,6 +87,13 @@ function renderKeyboard() {
 
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
+
+    if(!WORDS.includes(currentWord)) {
+        console.log('not a word')
+        handleNonwords();
+        return;
+    }
+
     if(currentWord.length !== 5){
         return;
     } else if(currentWord === secretWord) {
@@ -158,6 +165,12 @@ function handleAddLetter(letter) {
 
         nextSpaceEl.textContent = letter;
     }
+}
+
+function handleNonwords() {
+    messegeEl.style.visibility = 'visible';
+    messegeEl.innerText = 'Not a valid word';
+    //shakey tile animation?
 }
 
 function getCurrentWordArr() {
