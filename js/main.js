@@ -47,10 +47,10 @@ function init() {
     //     box.style.backgroundColor = 'black';
     // })
     render();
+    renderBoard();
 }
 
 function render() {
-    renderBoard();
     renderKeyboard();
     renderMessage();
 }
