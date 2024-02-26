@@ -78,8 +78,7 @@ function handleSubmitGuess() {
         winner = 1;
     
     }
-    
-   
+
     highlightLetters();
 
     if(guessedWords.length === 6) {
@@ -89,6 +88,12 @@ function handleSubmitGuess() {
 
     guessedWords.push([]);
     render();
+
+    //adding a 'locked' class after a word is submitted so it can't be deleted
+    let row = document.querySelectorAll('.row' + turn);
+    row.forEach((letter, i) => {
+        letter.classList.add('locked')
+    })
 }
 
 function highlightLetters() {
@@ -115,39 +120,26 @@ function highlightLetters() {
     })
 }
 
-// function getTileColor(letter, index) {
-//     const currentWord = getCurrentWordArr();
-//     const isLetter = currentWord.includes(letter)
-
-//     if (!isLetter) {
-//         return 'grey'
-//     } 
-
-//     const letterSpot = currentWord.charAt(index)
-//     const isLetterInSpot = (letter === letterSpot)
-
-//     if (isLetterInSpot) {
-//         return 'green'
-//     }
-
-//     return 'orange'
-// }
-
-
 function handleDelete() {
+
+    const lastLetterEl = document.getElementById((nextSpace - 1));
+
     
-    let currentWordArr = getCurrentWordArr();
-    const deletedLetter = currentWordArr.pop();
-    console.log(currentWordArr)
+    if(!lastLetterEl.classList.contains('locked')) {
+        let currentWordArr = getCurrentWordArr();
+        const deletedLetter = currentWordArr.pop();
+    
+        currentWordArr = guessedWords[guessedWords.length - 1]
+        // const lastLetterEl = document.getElementById((nextSpace - 1))
+    
+        lastLetterEl.textContent = '';
+        nextSpace = nextSpace - 1;
+    }
+    
 
-    currentWordArr = guessedWords[guessedWords.length - 1]
-    const lastLetterEl = document.getElementById((nextSpace - 1))
-console.log(guessedWords[guessedWords.length - 1])
-console.log(guessedWords)
-    lastLetterEl.textContent = '';
-    nextSpace = nextSpace - 1;
 
-    console.log(currentWordArr)
+// console.log(guessedWords[guessedWords.length - 1])
+// console.log(guessedWords)
 }
 
 function handleAddLetter(letter) {
@@ -162,8 +154,6 @@ function handleAddLetter(letter) {
 
         nextSpaceEl.textContent = letter;
     }
-
-
 }
 
 function getCurrentWordArr() {
@@ -183,3 +173,30 @@ function renderMessage() {
     }
 
 }
+
+
+
+
+
+
+//          CODE GRAVEYARD!!
+
+// previous attempt at a color shading function
+
+// function getTileColor(letter, index) {
+//     const currentWord = getCurrentWordArr();
+//     const isLetter = currentWord.includes(letter)
+
+//     if (!isLetter) {
+//         return 'grey'
+//     } 
+
+//     const letterSpot = currentWord.charAt(index)
+//     const isLetterInSpot = (letter === letterSpot)
+
+//     if (isLetterInSpot) {
+//         return 'green'
+//     }
+
+//     return 'orange'
+// }
