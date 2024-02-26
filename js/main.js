@@ -88,7 +88,13 @@ function renderKeyboard() {
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
 
-    if(!WORDS.includes(currentWord)) {
+    // working on a spell check kind of thing
+
+    // console.log(WORDS.includes(currentWord.toLowerCase()))
+
+    // encountering a bug that I need to work through!! 
+
+    if(!WORDS.includes(currentWord.toLowerCase())) {
         console.log('not a word')
         handleNonwords();
         return;
@@ -167,10 +173,11 @@ function handleAddLetter(letter) {
     }
 }
 
+// somehow, this situation screws up the rest of my functions
 function handleNonwords() {
     messegeEl.style.visibility = 'visible';
-    messegeEl.innerText = 'Not a valid word';
-    //shakey tile animation?
+    messegeEl.innerText = 'Enter a valid word';
+    //shakey tile animation?   
 }
 
 function getCurrentWordArr() {
