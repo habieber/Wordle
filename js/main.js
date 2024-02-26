@@ -1,12 +1,10 @@
 /*----- constants -----*/
-const WORDS_LIST = ['CODER', 'LOSER'];
-// import {WORDS_LIST} from "js/words.js"
+import {WORDS} from "./words.js"
 
 /*----- state variables -----*/
 
-let secretWord = WORDS_LIST[0]
-// let secretWord = WORDS_LIST[Math.floor(Math.random() * WORDS_LIST.length)];
-// let board = [];
+// let secretWord = WORDS[0].toUpperCase();
+let secretWord;
 
 let winner;
 let loser;
@@ -15,6 +13,7 @@ let loser;
 // let guessedWords = [[]];
 let nextSpace;
 let turn;
+let guessedWords;
 
 
 
@@ -33,7 +32,8 @@ init();
 
 
 function init() {
-    
+    secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+    console.log(secretWord);
     winner = 0;
     loser = 0;
     guessedWords = [[]];
