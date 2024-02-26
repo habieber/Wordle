@@ -109,6 +109,8 @@ function highlightLetters() {
         } else if (secretWordArr.includes(currentWord[i])) {
             console.log('close match')
             row[i].style.backgroundColor = 'goldenrod';
+        } else {
+            row[i].style.backgroundColor = 'rgb(44, 44, 46)';
         }
     })
 }
