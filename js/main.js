@@ -1,18 +1,19 @@
 /*----- constants -----*/
 const WORDS_LIST = ['CODER', 'LOSER'];
-const MAX_GUESSES = 6;
+// import {WORDS_LIST} from "js/words.js"
 
 /*----- state variables -----*/
 
-let board = [];
-let secretWord = WORDS_LIST[0];
+let secretWord = WORDS_LIST[0]
+// let secretWord = WORDS_LIST[Math.floor(Math.random() * WORDS_LIST.length)];
+// let board = [];
 
 let winner;
 let loser;
 
 //an array of arrays that contain the guessed letters from each line
 // let guessedWords = [[]];
-let nextSpace = 1;
+let nextSpace;
 let turn;
 
 
@@ -20,6 +21,7 @@ let turn;
 /*----- cached elements  -----*/
 const messegeEl = document.querySelector('h2');
 const playAgainBtn = document.getElementById('play-again-btn');
+const board = document.querySelectorAll('#board > div')
 
 /*----- event listeners -----*/
 const letters = document.querySelectorAll('button.key');
@@ -31,24 +33,38 @@ init();
 
 
 function init() {
-    board = document.querySelectorAll('#board > div')
-    console.log(board);
+    
     winner = 0;
     loser = 0;
     guessedWords = [[]];
     turn = 1;
     //first word is at index 0 here.
+    nextSpace = 1;
+    //why am I having to manually enter this?
+    playAgainBtn.style.visibility = 'hidden'
+    // board.forEach((box, i) => {
+    //     box.innerText = '';
+    //     box.style.backgroundColor = 'black';
+    // })
     render();
 }
 
 function render() {
+    renderBoard();
     renderKeyboard();
     renderMessage();
 }
 
+function renderBoard() {
+    document.querySelectorAll('#board > div').forEach((div, i) => {
+        div.style.backgroundColor = 'black';
+        div.innerText = '';
+    })
+   messegeEl.style.visibility = 'hidden';
+}
+
 // makes the clicking of keys populate letters to the board
 function renderKeyboard() {
-
 //learned this logic in a youtube tutorial
     for (let i = 0; i < letters.length; i++) {
         letters[i].onclick = ({target}) => {
@@ -74,31 +90,28 @@ function handleSubmitGuess() {
     if(currentWord.length !== 5){
         return;
     } else if(currentWord === secretWord) {
-        console.log('you win!');
         winner = 1;
-    
     }
 
     highlightLetters();
 
     if(guessedWords.length === 6) {
         loser = 1;
-        console.log('you lose');
     }
 
     guessedWords.push([]);
-    render();
 
     //adding a 'locked' class after a word is submitted so it can't be deleted
     let row = document.querySelectorAll('.row' + turn);
     row.forEach((letter, i) => {
         letter.classList.add('locked')
     })
+
+    render();
 }
 
 function highlightLetters() {
     let row = document.querySelectorAll('.row' + turn);
-    console.log(row);
     const currentWord = getCurrentWordArr();
     console.log(`current word: ${currentWord}`);
     const secretWordArr = secretWord.split('');
@@ -112,7 +125,6 @@ function highlightLetters() {
             //console.log(i);
             row[i].style.backgroundColor = 'green';
         } else if (secretWordArr.includes(currentWord[i])) {
-            console.log('close match')
             row[i].style.backgroundColor = 'goldenrod';
         } else {
             row[i].style.backgroundColor = 'rgb(44, 44, 46)';
@@ -121,25 +133,17 @@ function highlightLetters() {
 }
 
 function handleDelete() {
-
     const lastLetterEl = document.getElementById((nextSpace - 1));
-
     
     if(!lastLetterEl.classList.contains('locked')) {
         let currentWordArr = getCurrentWordArr();
         const deletedLetter = currentWordArr.pop();
     
         currentWordArr = guessedWords[guessedWords.length - 1]
-        // const lastLetterEl = document.getElementById((nextSpace - 1))
     
         lastLetterEl.textContent = '';
         nextSpace = nextSpace - 1;
     }
-    
-
-
-// console.log(guessedWords[guessedWords.length - 1])
-// console.log(guessedWords)
 }
 
 function handleAddLetter(letter) {
@@ -171,7 +175,6 @@ function renderMessage() {
         messegeEl.innerText = `Nice try! The word was ${secretWord}`;
         playAgainBtn.style.visibility = 'visible';
     }
-
 }
 
 
