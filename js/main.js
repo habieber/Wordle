@@ -40,12 +40,7 @@ function init() {
     turn = 1;
     //first word is at index 0 here.
     nextSpace = 1;
-    //why am I having to manually enter this?
     playAgainBtn.style.visibility = 'hidden'
-    // board.forEach((box, i) => {
-    //     box.innerText = '';
-    //     box.style.backgroundColor = 'black';
-    // })
     render();
     renderBoard();
 }
@@ -67,6 +62,7 @@ function renderBoard() {
     document.querySelectorAll('#board > div').forEach((div, i) => {
         div.style.backgroundColor = 'black';
         div.innerText = '';
+        div.classList.remove('locked');
     })
     document.querySelectorAll('.key').forEach((key) => {
         key.style.backgroundColor = 'grey';
@@ -98,11 +94,7 @@ function renderKeyboard() {
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
 
-    // working on a spell check kind of thing
-
-    // console.log(WORDS.includes(currentWord.toLowerCase()))
-
-    // encountering a bug that I need to work through!! 
+    // flawed spell checking, since not every word is in my library
 
     if(!WORDS.includes(currentWord.toLowerCase())) {
         console.log('not a word')
@@ -141,6 +133,7 @@ function highlightLetters() {
     currentWord.forEach((letter, i) => {
         const secretLetter = secretWordArr[i];
         const key = document.getElementById(`${currentWord[i]}`);
+
         if (currentWord[i] === secretWordArr[i]) {
             row[i].style.backgroundColor = 'rgb(68, 125, 61)';
             key.style.backgroundColor = 'rgb(68, 125, 61)';
@@ -174,7 +167,7 @@ function handleAddLetter(letter) {
     if (currentWordArr && currentWordArr.length < 5) {
         currentWordArr.push(letter)
 
-        //access by row instead
+        //access by row instead?
         const nextSpaceEl = document.getElementById(nextSpace)
         nextSpace = nextSpace + 1
 
