@@ -50,6 +50,14 @@ function init() {
     renderBoard();
 }
 
+
+
+
+//find out why delete button isn't working properly after hitting play again btn
+
+
+
+
 function render() {
     renderKeyboard();
     renderMessage();
@@ -126,21 +134,25 @@ function handleSubmitGuess() {
 function highlightLetters() {
     let row = document.querySelectorAll('.row' + turn);
     const currentWord = getCurrentWordArr();
-    console.log(`current word: ${currentWord}`);
     const secretWordArr = secretWord.split('');
-    console.log(`secret word: ${secretWordArr}`);
-
 
     currentWord.forEach((letter, i) => {
         const secretLetter = secretWordArr[i];
+        const key = document.getElementById(`${currentWord[i]}`);
         if (currentWord[i] === secretWordArr[i]) {
             //console.log('match')
             //console.log(i);
-            row[i].style.backgroundColor = 'green';
+            row[i].style.backgroundColor = 'rgb(68, 125, 61)';
+            
+            key.style.backgroundColor = 'rgb(68, 125, 61)';
+            console.log(key);
+            console.log(currentWord[i])
         } else if (secretWordArr.includes(currentWord[i])) {
-            row[i].style.backgroundColor = 'goldenrod';
+            row[i].style.backgroundColor = 'rgb(165, 143, 46)';
+            key.style.backgroundColor = 'rgb(165, 143, 46)';
         } else {
             row[i].style.backgroundColor = 'rgb(44, 44, 46)';
+            key.style.backgroundColor = 'rgb(44, 44, 46)';
         }
     })
 }

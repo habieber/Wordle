@@ -79,7 +79,7 @@ button, #enter-key, #delete-key {
     font-weight: 100;
     margin: 0 0.5vmin;
     padding: 0.5vmin;
-    border: solid 2px grey;
+    border: solid 2px transparent;
     border-radius: 15%;
     color: white;
     background-color: grey;
