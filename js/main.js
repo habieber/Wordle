@@ -68,6 +68,9 @@ function renderBoard() {
         div.style.backgroundColor = 'black';
         div.innerText = '';
     })
+    document.querySelectorAll('.key').forEach((key) => {
+        key.style.backgroundColor = 'grey';
+    })
    messegeEl.style.visibility = 'hidden';
 }
 
@@ -78,7 +81,6 @@ function renderKeyboard() {
         letters[i].onclick = ({target}) => {
                 const key = target.textContent;
                 
-// diversion if enter or delete are clicked
                 if(key === 'ENTER') {
                     handleSubmitGuess();
                     turn += 1;
@@ -122,7 +124,7 @@ function handleSubmitGuess() {
 
     guessedWords.push([]);
 
-    //adding a 'locked' class after a word is submitted so it can't be deleted
+    //added a 'locked' class after a word is submitted so it can't be deleted
     let row = document.querySelectorAll('.row' + turn);
     row.forEach((letter, i) => {
         letter.classList.add('locked')
@@ -140,13 +142,8 @@ function highlightLetters() {
         const secretLetter = secretWordArr[i];
         const key = document.getElementById(`${currentWord[i]}`);
         if (currentWord[i] === secretWordArr[i]) {
-            //console.log('match')
-            //console.log(i);
             row[i].style.backgroundColor = 'rgb(68, 125, 61)';
-            
             key.style.backgroundColor = 'rgb(68, 125, 61)';
-            console.log(key);
-            console.log(currentWord[i])
         } else if (secretWordArr.includes(currentWord[i])) {
             row[i].style.backgroundColor = 'rgb(165, 143, 46)';
             key.style.backgroundColor = 'rgb(165, 143, 46)';
@@ -185,10 +182,14 @@ function handleAddLetter(letter) {
     }
 }
 
-// somehow, this situation screws up the rest of my functions
 function handleNonwords() {
     messegeEl.style.visibility = 'visible';
     messegeEl.innerText = 'Enter a valid word';
+    
+    setTimeout(() => {
+        messegeEl.style.visibility = 'hidden';
+    }, 3000);
+
     turn -= 1;
     console.log(turn);
     //shakey tile animation?
