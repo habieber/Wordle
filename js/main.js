@@ -41,6 +41,9 @@ function init() {
     //first word is at index 0 here.
     nextSpace = 1;
     playAgainBtn.style.visibility = 'hidden'
+
+
+
     render();
     renderBoard();
 }
@@ -134,6 +137,25 @@ function highlightLetters() {
         const secretLetter = secretWordArr[i];
         const key = document.getElementById(`${currentWord[i]}`);
 
+        let secretWordLetterCount = secretWordArr.reduce((acc, i) => {
+            !acc[i] ? acc[i] = 1 : acc[i]++
+            return acc
+        }, {})
+    
+        let currentWordLetterCount = currentWord.reduce((acc, i) => {
+            !acc[i] ? acc[i] = 1 : acc[i]++
+            return acc
+        }, {})
+
+    console.log(secretWordLetterCount);
+    console.log(currentWordLetterCount);
+
+
+    // if(currentWordLetterCount[currentWord[i]] > 1){
+    //     console.log(currentWordLetterCount[currentWord[i]] > 1)
+    //     return;
+    // }
+
         if (currentWord[i] === secretWordArr[i]) {
             row[i].style.backgroundColor = 'rgb(68, 125, 61)';
             key.style.backgroundColor = 'rgb(68, 125, 61)';
@@ -145,7 +167,36 @@ function highlightLetters() {
             key.style.backgroundColor = 'rgb(44, 44, 46)';
         }
     })
+
+
 }
+
+// Checks if the letter is in the correct word
+// If the letter is not in the word, shades letter grey
+// If the letter is in the word, check if it's in the right position
+// If the letter is in the right position, shades green
+// Else, shades yellow
+
+
+    // if currentletter is in the secretword and right spot: green
+    // if currentletter is in the secretword and wrong spot: yellow
+    // if current letter is in the secret word more than once and in the wrong spot: yellow
+    // if current letter is already green and in the secret word in another spot: stay green
+    // if currentletter is not in the secret word: grey
+
+    
+
+
+    //playing around with some letter counting logic
+    // let secretWordArr = secretWord.split('');
+    
+    // let letterCount = secretWordArr.filter((x) => x === 'A').length;
+    
+
+    
+
+    // console.log(letterCount)
+
 
 function handleDelete() {
     const lastLetterEl = document.getElementById((nextSpace - 1));
