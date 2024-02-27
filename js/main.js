@@ -177,7 +177,9 @@ function handleAddLetter(letter) {
 function handleNonwords() {
     messegeEl.style.visibility = 'visible';
     messegeEl.innerText = 'Enter a valid word';
-    //shakey tile animation?   
+    turn -= 1;
+    console.log(turn);
+    //shakey tile animation?
 }
 
 function getCurrentWordArr() {
