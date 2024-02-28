@@ -48,6 +48,7 @@ function renderBoard() {
         div.style.backgroundColor = 'black';
         div.innerText = '';
         div.classList.remove('locked');
+        div.classList.remove('animate__flipInX')
     })
     document.querySelectorAll('.key').forEach((key) => {
         key.style.backgroundColor = 'grey';
