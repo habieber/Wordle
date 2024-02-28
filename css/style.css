@@ -131,3 +131,10 @@ button:hover {
     align-items: center;
     height: 20px;
 }
+
+@media screen and (max-width: 480px) {
+    #keyboard {
+        align-items: center;
+        max-width: 100%;
+    }
+}
