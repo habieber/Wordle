@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* background-color: black; */
 }
 
 body, html {
@@ -26,15 +25,17 @@ header {
 
 .title {
     color: white;
-    font-size: 9vmin;
+    font-size: 8vmin;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
-    margin: 5vmin 5vmin;
+    margin: 0;
 }
 
 .message {
     color: rgb(221, 91, 91);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 3vmin;
-    margin: 2vmin 5vmin;
+    margin: 2vmin 2vmin;
     text-align: center;
     visibility: hidden;
 }
@@ -44,8 +45,8 @@ header {
     grid-template-columns: repeat(5, 7vmin);
     grid-template-rows: repeat(6, 7vmin);
     gap: 1vmin;
-    margin-top: 5vmin;
-    margin-bottom: 5vmin;
+    margin-top: 0;
+    margin-bottom: 0;
     justify-content: center;
 }
 
@@ -63,26 +64,41 @@ header {
     flex-direction: column;
     align-items: center;
     gap: .5vmin;
-    margin-bottom: 5vmin;
 }
 
 #keyboard div {
+    flex: 1;
     display: flex;
+    padding-bottom: 100%;
+    margin-bottom: -100%;
 }
 
 .key-row2 {
-    margin: 2.5px 0;
+    margin: 1vmin;
+}
+
+.key-row3 {
+    margin: 1vmin;
 }
  
 button, #enter-key, #delete-key {
     font-size: 20px;
     font-weight: 100;
     margin: 0 0.5vmin;
-    padding: 0.5vmin;
+    padding: 1vmin;
     border: solid 2px transparent;
-    border-radius: 15%;
     color: white;
-    background-color: grey;
+    /* background-color: grey; */
+    padding-block: 1px;
+    padding-inline: 6px;
+    border-radius: 4px;
+    height: 58px;
+    width: 40px;
+}
+
+#enter-key, #delete-key {
+    width: 65px;
+    font-size: 15px;
 }
 
 button:hover {
@@ -90,17 +106,28 @@ button:hover {
     background-color: rgb(194, 173, 203);
 }
 
-#play-again-btn, footer {
+#play-again-btn {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    color: white;
-    background-color: rgb(221, 91, 91);
-    border-radius: 15%;
+    transform: translate(0px, -155px);
     font-size: 20px;
     font-weight: 100;
-    margin: 0 0.5vmin;
-    padding: 0.5vmin;
-    border: solid 2px grey;
-    visibility: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    background-color: white;
+    border-radius: 20%;
+    padding: 1vmin;
+    border: solid 2px transparent;
+    width: 100px;
+    visibility: visible;
+}
+
+#play-again-btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
 }

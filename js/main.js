@@ -141,8 +141,6 @@ function highlightLetters() {
             row[i].style.backgroundColor = grey;
             key.style.backgroundColor = grey;
         }
-        console.log(currentWord)
-        console.log(secretWordArr)
     }    
 }
 
@@ -183,7 +181,6 @@ function handleNonwords() {
     }, 3000);
 
     turn -= 1;
-    console.log(turn);
     //shakey tile animation?
 }
 
