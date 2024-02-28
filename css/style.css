@@ -74,12 +74,16 @@ body, html {
     margin-bottom: -100%; */
 }
 
+.key-row1 {
+    margin: 0.5vmin;
+}
+
 .key-row2 {
-    margin: 1vmin;
+    margin: 0.5vmin;
 }
 
 .key-row3 {
-    margin: 1vmin;
+    margin: 0.5vmin;
 }
  
 button, #enter-key, #delete-key {
