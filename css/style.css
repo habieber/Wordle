@@ -16,7 +16,7 @@ body, html {
     height: 100%;
     flex-direction: column;
     align-items: center;
-    padding: 10vmin;
+    padding: 3vmin;
 }
 
 /* header {
@@ -25,7 +25,7 @@ body, html {
 
 .title {
     color: white;
-    font-size: 8vmin;
+    font-size: 7vmin;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
     margin: 0;
@@ -42,8 +42,8 @@ body, html {
 
 #board {
     display: grid;
-    grid-template-columns: repeat(5, 12vmin);
-    grid-template-rows: repeat(6, 12vmin);
+    grid-template-columns: repeat(5, 9vmin);
+    grid-template-rows: repeat(6, 9vmin);
     gap: 1vmin;
     margin-top: 0;
     margin-bottom: 0;
