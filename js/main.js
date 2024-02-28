@@ -2,15 +2,9 @@
 import {WORDS} from "./words.js"
 
 /*----- state variables -----*/
-
-// let secretWord = WORDS[0].toUpperCase();
 let secretWord;
-
 let winner;
 let loser;
-
-//an array of arrays that contain the guessed letters from each line
-// let guessedWords = [[]];
 let nextSpace;
 let turn;
 let guessedWords;
@@ -27,9 +21,7 @@ const letters = document.querySelectorAll('button.key');
 playAgainBtn.addEventListener('click', init);
 
 /*----- functions -----*/
-
 init();
-
 
 function init() {
     secretWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
@@ -41,20 +33,9 @@ function init() {
     //first word is at index 0 here.
     nextSpace = 1;
     playAgainBtn.style.visibility = 'hidden'
-
-
-
     render();
     renderBoard();
 }
-
-
-
-
-//find out why delete button isn't working properly after hitting play again btn
-
-
-
 
 function render() {
     renderKeyboard();
@@ -73,7 +54,6 @@ function renderBoard() {
    messegeEl.style.visibility = 'hidden';
 }
 
-// makes the clicking of keys populate letters to the board
 function renderKeyboard() {
 //learned this logic in a youtube tutorial
     for (let i = 0; i < letters.length; i++) {
@@ -132,71 +112,39 @@ function highlightLetters() {
     let row = document.querySelectorAll('.row' + turn);
     const currentWord = getCurrentWordArr();
     const secretWordArr = secretWord.split('');
+    const green = 'rgb(68, 125, 61)';
+    const yellow = 'rgb(165, 143, 46)';
+    const grey = 'rgb(44, 44, 46)';
 
-    currentWord.forEach((letter, i) => {
-        const secretLetter = secretWordArr[i];
+//inspired by https://stackoverflow.com/questions/72865151/duplicate-verification-in-wordle-clone/72865444#72865444
+    for (let i = 0; i < 5; i++) {
         const key = document.getElementById(`${currentWord[i]}`);
 
-        let secretWordLetterCount = secretWordArr.reduce((acc, i) => {
-            !acc[i] ? acc[i] = 1 : acc[i]++
-            return acc
-        }, {})
-    
-        let currentWordLetterCount = currentWord.reduce((acc, i) => {
-            !acc[i] ? acc[i] = 1 : acc[i]++
-            return acc
-        }, {})
-
-    console.log(secretWordLetterCount);
-    console.log(currentWordLetterCount);
-
-
-    // if(currentWordLetterCount[currentWord[i]] > 1){
-    //     console.log(currentWordLetterCount[currentWord[i]] > 1)
-    //     return;
-    // }
-
         if (currentWord[i] === secretWordArr[i]) {
-            row[i].style.backgroundColor = 'rgb(68, 125, 61)';
-            key.style.backgroundColor = 'rgb(68, 125, 61)';
-        } else if (secretWordArr.includes(currentWord[i])) {
-            row[i].style.backgroundColor = 'rgb(165, 143, 46)';
-            key.style.backgroundColor = 'rgb(165, 143, 46)';
-        } else {
-            row[i].style.backgroundColor = 'rgb(44, 44, 46)';
-            key.style.backgroundColor = 'rgb(44, 44, 46)';
+            row[i].style.backgroundColor = green;
+            key.style.backgroundColor = green;
+            secretWordArr[i] = '';
+            currentWord[i] = '';
         }
-    })
+    }    
+    for (let i = 0; i < 5; i++) {
+        const key = document.getElementById(`${currentWord[i]}`);
 
-
+        if (!currentWord[i]) continue;
+        const index = secretWordArr.indexOf(currentWord[i]);
+        console.log(i)
+        if (index !== -1) {
+            row[i].style.backgroundColor = yellow;
+            key.style.backgroundColor = yellow;
+            secretWordArr[index] = '';
+        } else {
+            row[i].style.backgroundColor = grey;
+            key.style.backgroundColor = grey;
+        }
+        console.log(currentWord)
+        console.log(secretWordArr)
+    }    
 }
-
-// Checks if the letter is in the correct word
-// If the letter is not in the word, shades letter grey
-// If the letter is in the word, check if it's in the right position
-// If the letter is in the right position, shades green
-// Else, shades yellow
-
-
-    // if currentletter is in the secretword and right spot: green
-    // if currentletter is in the secretword and wrong spot: yellow
-    // if current letter is in the secret word more than once and in the wrong spot: yellow
-    // if current letter is already green and in the secret word in another spot: stay green
-    // if currentletter is not in the secret word: grey
-
-    
-
-
-    //playing around with some letter counting logic
-    // let secretWordArr = secretWord.split('');
-    
-    // let letterCount = secretWordArr.filter((x) => x === 'A').length;
-    
-
-    
-
-    // console.log(letterCount)
-
 
 function handleDelete() {
     const lastLetterEl = document.getElementById((nextSpace - 1));
@@ -273,7 +221,7 @@ function renderMessage() {
 //         return 'grey'
 //     } 
 
-//     const letterSpot = currentWord.charAt(index)
+//     const currentWordpot = currentWord.charAt(index)
 //     const isLetterInSpot = (letter === letterSpot)
 
 //     if (isLetterInSpot) {
@@ -282,3 +230,54 @@ function renderMessage() {
 
 //     return 'orange'
 // }
+
+
+
+    // currentWord.forEach((letter, i) => {
+    //     const secretLetter = secretWordArr[i];
+    //     const key = document.getElementById(`${currentWord[i]}`);
+
+    // // if(currentWordLetterCount[currentWord[i]] > 1){
+    // //     console.log(currentWordLetterCount[currentWord[i]] > 1)
+    // //     return;
+    // // }
+
+    //     if (currentWord[i] === secretWordArr[i]) {
+    //         row[i].style.backgroundColor = 'rgb(68, 125, 61)';
+    //         key.style.backgroundColor = 'rgb(68, 125, 61)';
+    //     } else if (secretWordArr.includes(currentWord[i])) {
+    //         const amountOfLetter = secretWordArr.filter((curLetter) => curLetter === (currentWord[i]))
+    //         if (amountOfLetter.length > 1){
+    //             row[i].style.backgroundColor = 'rgb(44, 44, 46)';
+    //             key.style.backgroundColor = 'rgb(44, 44, 46)';
+    //         } else {
+    //             row[i].style.backgroundColor = 'rgb(165, 143, 46)';
+    //             key.style.backgroundColor = 'rgb(165, 143, 46)';
+    //         }
+    //     } else {
+    //         row[i].style.backgroundColor = 'rgb(44, 44, 46)';
+    //         key.style.backgroundColor = 'rgb(44, 44, 46)';
+    //     }
+    // })
+
+
+//}
+
+// else if (secretWordArr.includes(currentWord[i])) {
+//     row[i].style.backgroundColor = 'rgb(165, 143, 46)';
+//     key.style.backgroundColor = 'rgb(165, 143, 46)';
+
+
+
+// let secretWordLetterCount = secretWordArr.reduce((acc, i) => {
+//     !acc[i] ? acc[i] = 1 : acc[i]++
+//     return acc
+// }, {})
+
+// let currentWordLetterCount = currentWord.reduce((acc, i) => {
+//     !acc[i] ? acc[i] = 1 : acc[i]++
+//     return acc
+// }, {})
+
+// console.log(secretWordLetterCount);
+// console.log(currentWordLetterCount);
