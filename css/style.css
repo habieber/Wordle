@@ -42,8 +42,8 @@ body, html {
 
 #board {
     display: grid;
-    grid-template-columns: repeat(5, 7vmin);
-    grid-template-rows: repeat(6, 7vmin);
+    grid-template-columns: repeat(5, 12vmin);
+    grid-template-rows: repeat(6, 12vmin);
     gap: 1vmin;
     margin-top: 0;
     margin-bottom: 0;
@@ -64,14 +64,12 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: auto;
+    margin: auto;
     gap: .5vmin;
 }
 
 #keyboard div {
     display: flex;
-    /* padding-bottom: 100%;
-    margin-bottom: -100%; */
 }
 
 .key-row1 {
@@ -140,6 +138,7 @@ button:hover {
 @media screen and (max-width: 480px) {
     #keyboard {
         align-items: center;
+        justify-content: center;
         width: 100%;
     }
 }
