@@ -9,7 +9,7 @@ let nextSpace;
 let turn;
 let guessedWords;
 
-
+let guessedWordCount;
 
 /*----- cached elements  -----*/
 const messegeEl = document.querySelector('h2');
@@ -32,6 +32,7 @@ function init() {
     turn = 1;
     //first word is at index 0 here.
     nextSpace = 1;
+    guessedWordCount = 0;
     playAgainBtn.style.visibility = 'hidden'
     render();
     renderBoard();
@@ -76,9 +77,10 @@ function renderKeyboard() {
 
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
+    
+
 
     // flawed spell checking, since not every word is in my library
-
     if(!WORDS.includes(currentWord.toLowerCase())) {
         console.log('not a word')
         handleNonwords();
@@ -91,7 +93,8 @@ function handleSubmitGuess() {
         winner = 1;
     }
 
-    highlightLetters();
+    highlightLetters(); 
+    //<--this is where I was calling highlight function before animation addition
 
     if(guessedWords.length === 6) {
         loser = 1;
@@ -109,6 +112,7 @@ function handleSubmitGuess() {
 }
 
 function highlightLetters() {
+
     let row = document.querySelectorAll('.row' + turn);
     const currentWord = getCurrentWordArr();
     const secretWordArr = secretWord.split('');
@@ -132,7 +136,7 @@ function highlightLetters() {
 
         if (!currentWord[i]) continue;
         const index = secretWordArr.indexOf(currentWord[i]);
-        console.log(i)
+        // console.log(i)
         if (index !== -1) {
             row[i].style.backgroundColor = yellow;
             key.style.backgroundColor = yellow;
@@ -142,6 +146,27 @@ function highlightLetters() {
             key.style.backgroundColor = grey;
         }
     }    
+
+    const currentWordArr = getCurrentWordArr();
+    const firstLetterId = guessedWordCount * 5 + 1
+    const interval = 200;
+
+    currentWordArr.forEach((letter, i) => {
+        setTimeout(() => {
+            // const tileColor = 'grey';
+            const letterId = firstLetterId + i;
+            const letterEl = document.getElementById(`${letterId}`)
+
+            letterEl.classList.add("animate__flipInX")
+            // letterEl.style.backgroundColor = tileColor;
+            
+        }, interval * i)
+    })
+
+    guessedWordCount += 1;
+
+
+
 }
 
 function handleDelete() {
