@@ -94,6 +94,22 @@ function handleSubmitGuess() {
         winner = 1;
     }
 
+    // flipLetters();
+
+    for (let i = 0; i < 5; i++) {
+        const currentWordArr = getCurrentWordArr();
+        const firstLetterId = guessedWordCount * 5 + 1
+        const interval = 250 * i;
+
+        setTimeout(() => {
+            const letterId = firstLetterId + i;
+            const letterEl = document.getElementById(`${letterId}`)
+
+            letterEl.classList.add("animate__flipInX")
+            //how to integrate the color change bit here??
+        }, interval)
+    }
+
     highlightLetters(); 
     //<--this is where I was calling highlight function before animation addition
 
@@ -112,8 +128,28 @@ function handleSubmitGuess() {
     render();
 }
 
-function highlightLetters() {
+// function flipLetters() {
+//     const currentWordArr = getCurrentWordArr();
+//     const firstLetterId = guessedWordCount * 5 + 1
+//     const interval = 200;
 
+//     currentWordArr.forEach((letter, i) => {
+//         setTimeout(() => {
+//             // const tileColor = 'grey';
+//             const letterId = firstLetterId + i;
+//             const letterEl = document.getElementById(`${letterId}`)
+
+//             letterEl.classList.add("animate__flipInX")
+//             // letterEl.style.backgroundColor = tileColor;
+            
+//         }, interval * i)
+//     })
+  
+    
+//     guessedWordCount += 1;
+// }
+
+function highlightLetters() {
     let row = document.querySelectorAll('.row' + turn);
     const currentWord = getCurrentWordArr();
     const secretWordArr = secretWord.split('');
@@ -123,7 +159,7 @@ function highlightLetters() {
 
 //inspired by https://stackoverflow.com/questions/72865151/duplicate-verification-in-wordle-clone/72865444#72865444
     for (let i = 0; i < 5; i++) {
-        const key = document.getElementById(`${currentWord[i]}`);
+            const key = document.getElementById(`${currentWord[i]}`);
 
         if (currentWord[i] === secretWordArr[i]) {
             row[i].style.backgroundColor = green;
@@ -131,7 +167,8 @@ function highlightLetters() {
             secretWordArr[i] = '';
             currentWord[i] = '';
         }
-    }    
+    }   
+
     for (let i = 0; i < 5; i++) {
         const key = document.getElementById(`${currentWord[i]}`);
 
@@ -148,25 +185,23 @@ function highlightLetters() {
         }
     }    
 
-    const currentWordArr = getCurrentWordArr();
-    const firstLetterId = guessedWordCount * 5 + 1
-    const interval = 200;
+    // const currentWordArr = getCurrentWordArr();
+    // const firstLetterId = guessedWordCount * 5 + 1
+    // const interval = 200;
 
-    currentWordArr.forEach((letter, i) => {
-        setTimeout(() => {
-            // const tileColor = 'grey';
-            const letterId = firstLetterId + i;
-            const letterEl = document.getElementById(`${letterId}`)
+    // currentWordArr.forEach((letter, i) => {
+    //     setTimeout(() => {
+    //         // const tileColor = 'grey';
+    //         const letterId = firstLetterId + i;
+    //         const letterEl = document.getElementById(`${letterId}`)
 
-            letterEl.classList.add("animate__flipInX")
-            // letterEl.style.backgroundColor = tileColor;
+    //         letterEl.classList.add("animate__flipInX")
+    //         // letterEl.style.backgroundColor = tileColor;
             
-        }, interval * i)
-    })
+    //     }, interval * i)
+    // })
 
-    guessedWordCount += 1;
-
-
+    // guessedWordCount += 1;
 
 }
 

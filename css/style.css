@@ -19,9 +19,9 @@ body, html {
     padding: 10vmin;
 }
 
-header {
+/* header {
     border-bottom: 1px, solid, darkgreen;
-}
+} */
 
 .title {
     color: white;
@@ -63,14 +63,15 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin-left: auto;
     gap: .5vmin;
 }
 
 #keyboard div {
-    flex: 1;
     display: flex;
-    padding-bottom: 100%;
-    margin-bottom: -100%;
+    /* padding-bottom: 100%;
+    margin-bottom: -100%; */
 }
 
 .key-row2 {
@@ -135,6 +136,6 @@ button:hover {
 @media screen and (max-width: 480px) {
     #keyboard {
         align-items: center;
-        max-width: 100%;
+        width: 100%;
     }
 }
