@@ -8,6 +8,7 @@ let loser;
 let nextSpace;
 let turn;
 let guessedWords;
+
 let guessedWordCount;
 
 /*----- cached elements  -----*/
@@ -77,8 +78,11 @@ function renderKeyboard() {
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
     
+
+
     // flawed spell checking, since not every word in the dictionary is in my library
     if(!WORDS.includes(currentWord.toLowerCase())) {
+        console.log('not a word')
         handleNonwords();
         return;
     }
@@ -92,7 +96,7 @@ function handleSubmitGuess() {
     flipLetters();
 
     highlightLetters(); 
-
+    
     if(guessedWords.length === 6) {
         loser = 1;
     }
@@ -100,7 +104,6 @@ function handleSubmitGuess() {
     guessedWords.push([]);
 
     let row = document.querySelectorAll('.row' + turn);
-    
     row.forEach((letter, i) => {
         letter.classList.add('locked')
     })
@@ -108,7 +111,7 @@ function handleSubmitGuess() {
     render();
 }
 
-function flipLetters () {
+function flipLetters() {
     for (let i = 0; i < 5; i++) {
         const currentWordArr = getCurrentWordArr();
         const firstLetterId = guessedWordCount * 5 + 1
@@ -136,10 +139,13 @@ function highlightLetters() {
 //inspired by https://stackoverflow.com/questions/72865151/duplicate-verification-in-wordle-clone/72865444#72865444
     for (let i = 0; i < 5; i++) {
         const key = document.getElementById(`${currentWord[i]}`);
+        const interval = 250 * i
 
         if (currentWord[i] === secretWordArr[i]) {
-            row[i].style.backgroundColor = green;
-            key.style.backgroundColor = green;
+            setTimeout (() => {
+                row[i].style.backgroundColor = green;
+                key.style.backgroundColor = green;
+            }, interval)
             secretWordArr[i] = '';
             currentWord[i] = '';
         }
@@ -147,22 +153,29 @@ function highlightLetters() {
 
     for (let i = 0; i < 5; i++) {
         const key = document.getElementById(`${currentWord[i]}`);
+        const interval = 250 * i
 
         if (!currentWord[i]) continue;
         
         const index = secretWordArr.indexOf(currentWord[i]);
         
         if (index !== -1) {
+            setTimeout (() => {
             row[i].style.backgroundColor = yellow;
             key.style.backgroundColor = yellow;
             secretWordArr[index] = '';
+            }, interval)
         } else {
-            row[i].style.backgroundColor = grey;
+            setTimeout (() => {
+                row[i].style.backgroundColor = grey;
+            }, interval)
             if (key.style.backgroundColor === 'rgb(128, 128, 128)') {
-                key.style.backgroundColor = grey;
+                setTimeout(() => {
+                    key.style.backgroundColor = grey;
+                }, interval)
             }
         } 
-    }    
+    }   
 }
 
 function handleDelete() {
@@ -194,7 +207,7 @@ function handleAddLetter(letter) {
 
 function handleNonwords() {
     messegeEl.style.visibility = 'visible';
-    messegeEl.innerText = 'Not in word list';
+    messegeEl.innerText = 'Enter a valid word';
     
     setTimeout(() => {
         messegeEl.style.visibility = 'hidden';
