@@ -31,6 +31,6 @@ The aim is for players to deduce what the hidden word is based on logic and dedu
 
 # Next Steps
 
-- Synchronize tile highlight feature with flip animation
 - Add animation to shake tiles when a submission entered is not a valid word
 - Refine and expand on hidden words list
+- Add tile shaking animation when guessed word is not in words list

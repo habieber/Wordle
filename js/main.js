@@ -146,6 +146,7 @@ function highlightLetters() {
                 row[i].style.backgroundColor = green;
                 key.style.backgroundColor = green;
             }, interval)
+
             secretWordArr[i] = '';
             currentWord[i] = '';
         }
@@ -161,10 +162,12 @@ function highlightLetters() {
         
         if (index !== -1) {
             setTimeout (() => {
-            row[i].style.backgroundColor = yellow;
-            key.style.backgroundColor = yellow;
+                row[i].style.backgroundColor = yellow;
+                key.style.backgroundColor = yellow;
+            }, interval)
+            
             secretWordArr[index] = '';
-            }, interval + 50)
+            
         } else {
             setTimeout (() => {
                 row[i].style.backgroundColor = grey;
