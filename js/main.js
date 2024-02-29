@@ -79,7 +79,6 @@ function handleSubmitGuess() {
     
     // flawed spell checking, since not every word in the dictionary is in my library
     if(!WORDS.includes(currentWord.toLowerCase())) {
-        console.log('not a word')
         handleNonwords();
         return;
     }
@@ -195,7 +194,7 @@ function handleAddLetter(letter) {
 
 function handleNonwords() {
     messegeEl.style.visibility = 'visible';
-    messegeEl.innerText = 'Enter a valid word';
+    messegeEl.innerText = 'Not in word list';
     
     setTimeout(() => {
         messegeEl.style.visibility = 'hidden';
