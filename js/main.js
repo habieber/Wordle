@@ -8,7 +8,6 @@ let loser;
 let nextSpace;
 let turn;
 let guessedWords;
-
 let guessedWordCount;
 
 /*----- cached elements  -----*/
@@ -30,7 +29,6 @@ function init() {
     loser = 0;
     guessedWords = [[]];
     turn = 1;
-    //first word is at index 0 here.
     nextSpace = 1;
     guessedWordCount = 0;
     playAgainBtn.style.visibility = 'hidden'
@@ -51,13 +49,13 @@ function renderBoard() {
         div.classList.remove('animate__flipInX')
     })
     document.querySelectorAll('.key').forEach((key) => {
-        key.style.backgroundColor = 'grey';
+        key.style.backgroundColor = 'rgb(128, 128, 128)';
     })
    messegeEl.style.visibility = 'hidden';
 }
 
 function renderKeyboard() {
-//learned this logic in a youtube tutorial
+//logic inspired by youtube tutorial: https://www.youtube.com/watch?v=j7OhcuZQ-q8
     for (let i = 0; i < letters.length; i++) {
         letters[i].onclick = ({target}) => {
                 const key = target.textContent;
@@ -79,9 +77,7 @@ function renderKeyboard() {
 function handleSubmitGuess() {
     const currentWord = getCurrentWordArr().join('');
     
-
-
-    // flawed spell checking, since not every word is in my library
+    // flawed spell checking, since not every word in the dictionary is in my library
     if(!WORDS.includes(currentWord.toLowerCase())) {
         console.log('not a word')
         handleNonwords();
@@ -94,8 +90,26 @@ function handleSubmitGuess() {
         winner = 1;
     }
 
-    // flipLetters();
+    flipLetters();
 
+    highlightLetters(); 
+
+    if(guessedWords.length === 6) {
+        loser = 1;
+    }
+
+    guessedWords.push([]);
+
+    let row = document.querySelectorAll('.row' + turn);
+    
+    row.forEach((letter, i) => {
+        letter.classList.add('locked')
+    })
+
+    render();
+}
+
+function flipLetters () {
     for (let i = 0; i < 5; i++) {
         const currentWordArr = getCurrentWordArr();
         const firstLetterId = guessedWordCount * 5 + 1
@@ -106,50 +120,11 @@ function handleSubmitGuess() {
             const letterEl = document.getElementById(`${letterId}`)
 
             letterEl.classList.add("animate__flipInX")
-
-            //how to integrate the color change bit here??
         }, interval)
     }
 
-        highlightLetters(); 
-    
-    //<--this is where I was calling highlight function before animation addition
-
-    if(guessedWords.length === 6) {
-        loser = 1;
-    }
-
-    guessedWords.push([]);
-
-    //added a 'locked' class after a word is submitted so it can't be deleted
-    let row = document.querySelectorAll('.row' + turn);
-    row.forEach((letter, i) => {
-        letter.classList.add('locked')
-    })
-
-    render();
+    guessedWordCount += 1;
 }
-
-// function flipLetters() {
-//     const currentWordArr = getCurrentWordArr();
-//     const firstLetterId = guessedWordCount * 5 + 1
-//     const interval = 200;
-
-//     currentWordArr.forEach((letter, i) => {
-//         setTimeout(() => {
-//             // const tileColor = 'grey';
-//             const letterId = firstLetterId + i;
-//             const letterEl = document.getElementById(`${letterId}`)
-
-//             letterEl.classList.add("animate__flipInX")
-//             // letterEl.style.backgroundColor = tileColor;
-            
-//         }, interval * i)
-//     })
-  
-    
-//     guessedWordCount += 1;
-// }
 
 function highlightLetters() {
     let row = document.querySelectorAll('.row' + turn);
@@ -161,7 +136,7 @@ function highlightLetters() {
 
 //inspired by https://stackoverflow.com/questions/72865151/duplicate-verification-in-wordle-clone/72865444#72865444
     for (let i = 0; i < 5; i++) {
-            const key = document.getElementById(`${currentWord[i]}`);
+        const key = document.getElementById(`${currentWord[i]}`);
 
         if (currentWord[i] === secretWordArr[i]) {
             row[i].style.backgroundColor = green;
@@ -175,40 +150,20 @@ function highlightLetters() {
         const key = document.getElementById(`${currentWord[i]}`);
 
         if (!currentWord[i]) continue;
+        
         const index = secretWordArr.indexOf(currentWord[i]);
-        // console.log(i)
+        
         if (index !== -1) {
             row[i].style.backgroundColor = yellow;
             key.style.backgroundColor = yellow;
             secretWordArr[index] = '';
         } else {
             row[i].style.backgroundColor = grey;
-            // console.log(key.style.backgroundColor !== 'rgb(165, 143, 46)' || key.style.backgroundColor !== 'rgb(165, 143, 46)')
-            // console.log(key.style.backgroundColor)
-            // if (key.style.backgroundColor !== 'rgb(68, 125, 61)' || key.style.backgroundColor !== 'rgb(165, 143, 46)') {
+            if (key.style.backgroundColor === 'rgb(128, 128, 128)') {
                 key.style.backgroundColor = grey;
-            // }
+            }
         } 
     }    
-
-    // const currentWordArr = getCurrentWordArr();
-    // const firstLetterId = guessedWordCount * 5 + 1
-    // const interval = 200;
-
-    // currentWordArr.forEach((letter, i) => {
-    //     setTimeout(() => {
-    //         // const tileColor = 'grey';
-    //         const letterId = firstLetterId + i;
-    //         const letterEl = document.getElementById(`${letterId}`)
-
-    //         letterEl.classList.add("animate__flipInX")
-    //         // letterEl.style.backgroundColor = tileColor;
-            
-    //     }, interval * i)
-    // })
-
-    // guessedWordCount += 1;
-
 }
 
 function handleDelete() {
@@ -231,7 +186,6 @@ function handleAddLetter(letter) {
     if (currentWordArr && currentWordArr.length < 5) {
         currentWordArr.push(letter)
 
-        //access by row instead?
         const nextSpaceEl = document.getElementById(nextSpace)
         nextSpace = nextSpace + 1
 
@@ -248,7 +202,6 @@ function handleNonwords() {
     }, 3000);
 
     turn -= 1;
-    //shakey tile animation?
 }
 
 function getCurrentWordArr() {
@@ -258,90 +211,16 @@ function getCurrentWordArr() {
 
 function renderMessage() {
     if(winner === 1) {
-        messegeEl.style.visibility = 'visible';
-        messegeEl.innerText = `You got it!`;
-        playAgainBtn.style.visibility = 'visible';
+        setTimeout(() => {
+            messegeEl.style.visibility = 'visible';
+            messegeEl.innerText = `You got it!`;
+            playAgainBtn.style.visibility = 'visible';
+        }, 1600)  
     } else if(loser === 1) {
-        messegeEl.style.visibility = 'visible';
-        messegeEl.innerText = `Nice try! The word was ${secretWord}`;
-        playAgainBtn.style.visibility = 'visible';
+        setTimeout(() => {
+            messegeEl.style.visibility = 'visible';
+            messegeEl.innerText = `Nice try! The word was ${secretWord}`;
+            playAgainBtn.style.visibility = 'visible';
+        }, 1600)
     }
 }
-
-
-
-
-
-
-//          CODE GRAVEYARD!!
-
-// previous attempt at a color shading function
-
-// function getTileColor(letter, index) {
-//     const currentWord = getCurrentWordArr();
-//     const isLetter = currentWord.includes(letter)
-
-//     if (!isLetter) {
-//         return 'grey'
-//     } 
-
-//     const currentWordpot = currentWord.charAt(index)
-//     const isLetterInSpot = (letter === letterSpot)
-
-//     if (isLetterInSpot) {
-//         return 'green'
-//     }
-
-//     return 'orange'
-// }
-
-
-
-    // currentWord.forEach((letter, i) => {
-    //     const secretLetter = secretWordArr[i];
-    //     const key = document.getElementById(`${currentWord[i]}`);
-
-    // // if(currentWordLetterCount[currentWord[i]] > 1){
-    // //     console.log(currentWordLetterCount[currentWord[i]] > 1)
-    // //     return;
-    // // }
-
-    //     if (currentWord[i] === secretWordArr[i]) {
-    //         row[i].style.backgroundColor = 'rgb(68, 125, 61)';
-    //         key.style.backgroundColor = 'rgb(68, 125, 61)';
-    //     } else if (secretWordArr.includes(currentWord[i])) {
-    //         const amountOfLetter = secretWordArr.filter((curLetter) => curLetter === (currentWord[i]))
-    //         if (amountOfLetter.length > 1){
-    //             row[i].style.backgroundColor = 'rgb(44, 44, 46)';
-    //             key.style.backgroundColor = 'rgb(44, 44, 46)';
-    //         } else {
-    //             row[i].style.backgroundColor = 'rgb(165, 143, 46)';
-    //             key.style.backgroundColor = 'rgb(165, 143, 46)';
-    //         }
-    //     } else {
-    //         row[i].style.backgroundColor = 'rgb(44, 44, 46)';
-    //         key.style.backgroundColor = 'rgb(44, 44, 46)';
-    //     }
-    // })
-
-
-//}
-
-// else if (secretWordArr.includes(currentWord[i])) {
-//     row[i].style.backgroundColor = 'rgb(165, 143, 46)';
-//     key.style.backgroundColor = 'rgb(165, 143, 46)';
-
-
-
-// let secretWordLetterCount = secretWordArr.reduce((acc, i) => {
-//     !acc[i] ? acc[i] = 1 : acc[i]++
-//     return acc
-// }, {})
-
-// let currentWordLetterCount = currentWord.reduce((acc, i) => {
-//     !acc[i] ? acc[i] = 1 : acc[i]++
-//     return acc
-// }, {})
-
-// console.log(secretWordLetterCount);
-// console.log(currentWordLetterCount);

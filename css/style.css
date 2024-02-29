@@ -91,7 +91,7 @@ button, #enter-key, #delete-key {
     padding: 1vmin;
     border: solid 2px transparent;
     color: white;
-    background-color: grey;
+    background-color: rgb(128, 128, 128);
     padding-block: 1px;
     padding-inline: 6px;
     border-radius: 4px;
