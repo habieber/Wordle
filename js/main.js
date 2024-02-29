@@ -164,7 +164,7 @@ function highlightLetters() {
             row[i].style.backgroundColor = yellow;
             key.style.backgroundColor = yellow;
             secretWordArr[index] = '';
-            }, interval)
+            }, interval + 50)
         } else {
             setTimeout (() => {
                 row[i].style.backgroundColor = grey;
