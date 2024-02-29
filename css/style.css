@@ -91,7 +91,7 @@ button, #enter-key, #delete-key {
     padding: 1vmin;
     border: solid 2px transparent;
     color: white;
-    /* background-color: grey; */
+    background-color: grey;
     padding-block: 1px;
     padding-inline: 6px;
     border-radius: 4px;
@@ -140,5 +140,18 @@ button:hover {
         align-items: center;
         justify-content: center;
         width: 100%;
+    }
+
+    .key {
+        width: 2rem;
+        height: 3rem;
+        font-size: .5rem;
+    }
+
+    #enter-key, #delete-key {
+        width: 65px;
+        font-size: 12px;
+        height: 3rem;
+        width: 3.5rem;
     }
 }

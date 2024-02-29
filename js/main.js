@@ -106,11 +106,13 @@ function handleSubmitGuess() {
             const letterEl = document.getElementById(`${letterId}`)
 
             letterEl.classList.add("animate__flipInX")
+
             //how to integrate the color change bit here??
         }, interval)
     }
 
-    highlightLetters(); 
+        highlightLetters(); 
+    
     //<--this is where I was calling highlight function before animation addition
 
     if(guessedWords.length === 6) {
@@ -181,8 +183,12 @@ function highlightLetters() {
             secretWordArr[index] = '';
         } else {
             row[i].style.backgroundColor = grey;
-            key.style.backgroundColor = grey;
-        }
+            // console.log(key.style.backgroundColor !== 'rgb(165, 143, 46)' || key.style.backgroundColor !== 'rgb(165, 143, 46)')
+            // console.log(key.style.backgroundColor)
+            // if (key.style.backgroundColor !== 'rgb(68, 125, 61)' || key.style.backgroundColor !== 'rgb(165, 143, 46)') {
+                key.style.backgroundColor = grey;
+            // }
+        } 
     }    
 
     // const currentWordArr = getCurrentWordArr();
