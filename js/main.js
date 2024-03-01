@@ -82,7 +82,6 @@ function handleSubmitGuess() {
 
     // flawed spell checking, since not every word in the dictionary is in my library
     if(!WORDS.includes(currentWord.toLowerCase())) {
-        console.log('not a word')
         handleNonwords();
         return;
     }
